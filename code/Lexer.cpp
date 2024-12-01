@@ -21,8 +21,13 @@ namespace charinfo {
 		return c == '+' || c == '-' || c == '*' ||
 			c == '/' || c == '^' || c == '=' ||
 			c == '<' || c == '>' || c == '!' ||
-			c == ':' || c == ',';
+			c == ':' || c == ',' || c == '?' || c == '.';
 	}
+
+	LLVM_READNONE inline bool isPoint(char c) {
+		return c == '.';
+	}
+
 }
 void Lexer::next(Token& token) {
 
@@ -63,6 +68,39 @@ void Lexer::next(Token& token) {
 		else if (Context == "loopc") {
 			kind = Token::KW_loopc;
 		}
+		else if (Context == "do") {
+			kind = Token::KW_do;
+		}
+		else if (Context == "for") {
+			kind = Token::KW_and;
+		}
+		else if (Context == "while") {
+			kind = Token::KW_while;
+		}
+		else if (Context == "switch") {
+			kind = Token::KW_switch;
+		}
+		else if (Context == "case") {
+			kind = Token::KW_case;
+		}
+		else if (Context == "bool") {
+			kind = Token::KW_bool;
+		}
+		else if (Context == "float") {
+			kind = Token::KW_and;
+		}
+		else if (Context == "xor") {
+			kind = Token::KW_xor;
+		}
+		else if (Context == "print") {
+			kind = Token::KW_print;
+		}
+		else if (Context == "const") {
+			kind = Token::KW_const;
+		}
+		else if (Context == "var") {
+			kind = Token::KW_var;
+		}
 		else if (Context == "and") {
 			kind = Token::KW_and;
 		}
@@ -94,10 +132,18 @@ void Lexer::next(Token& token) {
 
 	else if (charinfo::isDigit(*BufferPtr)) {
 
-		const char* end = BufferPtr + 1;
+		
+        const char* end = BufferPtr + 1;
 
 		while (charinfo::isDigit(*end))
 			++end;
+		if(charinfo::isPoint(*end)) {
+			++end;
+			while (charinfo::isDigit(*end))
+			    ++end;
+			formToken(token, end, Token::flnumber);
+			return;
+		}
 
 		formToken(token, end, Token::number);
 		return;
@@ -119,7 +165,12 @@ void Lexer::next(Token& token) {
 		else if (*BufferPtr == '*' && *(BufferPtr + 1) == '=') {      // *=
 			formToken(token, BufferPtr + 2, Token::star_equal);
 		}
-
+		else if (*BufferPtr == '+' && *(BufferPtr + 1) == '+') {      // *=
+			formToken(token, BufferPtr + 2, Token::plus_plus);
+		}
+		else if (*BufferPtr == '-' && *(BufferPtr + 1) == '-') {      // *=
+			formToken(token, BufferPtr + 2, Token::minus_minus);
+		}
 		else if (*BufferPtr == '/' && *(BufferPtr + 1) == '=') {      // /=
 			formToken(token, BufferPtr + 2, Token::slash_equal);
 		}
@@ -161,6 +212,7 @@ void Lexer::next(Token& token) {
 				CASE('<', Token::less);
 				CASE(';', Token::semi_colon);
 				CASE('%', Token::mod);
+				CASE('?', Token::question_mark);
 
 #undef CASE
 

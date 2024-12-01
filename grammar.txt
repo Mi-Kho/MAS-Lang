@@ -1,4 +1,4 @@
-S -> Cons S | Define S | Assign S | If S | Loop S | Define | Assign | If | Loop | Cons
+S -> Cons S | Define S | Switch S | Assign S | If S | Loop S | Define | Assign | If | Loop | Cons | Switch
 
 Cons -> "const" Define
 
@@ -68,6 +68,10 @@ Else -> "else" ":" "begin" Statement "end" |
 
 Statement -> Assign Statement | If Statement | Loop Statement | Assign | If | Loop
 
+Switch -> "switch" "(" Expr ")" "{" Cases Default "}"
+Cases -> "case" Expr ":" Statement "break" ";" Cases | "case" Expr ":" Statement "break" ";"
+Default -> "default" ":" Statement "break" ";" | ε
+
 Condition -> Condition "and" SubCondition | 
 	     Condition "or" SubCondition | 
              Condition "xor" SubCondition | SubCondition
@@ -77,5 +81,10 @@ SubCondition -> "True" | "False" | Expr | Expr Relational Expr |
 
 Relational -> ">" | "<" | ">=" | "<=" | "==" | "!="
 
-Loop -> "loopc " Condition ":" "begin" Statement "end"
+Loop -> "loopc" Condition ":" "begin" Statement "end" 
+      | "do" "{" Statement "}" "while" "(" Condition ")" 
+      | "for" "(" Define ";" Condition ";" Assign ")" "{" Statement "}"
+
+Print -> "print" "(" Expr ")" ";" 
+       | "print" "(" Id ")" ";"
 	

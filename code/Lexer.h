@@ -15,13 +15,16 @@ class Token {
 			unknown,        // unknown token
 			ident,          // identifier like a, b, c, d, etc.
 			number,         // number like 1, 2, 3, 4, etc.
+			flnumber,       // float number .
 			comma,          // ,
+			point,          // .
 			colon,          // :
 			plus,           // +
 			minus,          // -
 			star,           // *
 			slash,          // /
 			power,          // ^
+			question_mark,  // ?  
 			l_paren,        // (
 			r_paren,        // )
 			plus_equal,     // +=
@@ -31,6 +34,8 @@ class Token {
 			mod_equal,		// %=
 			equal,          // =
 			equal_equal,    // ==
+			minus_minus,    // --
+			plus_plus,      // ++
 			not_equal,      // !=
 			less,           // <
 			less_equal,     // <=
@@ -39,13 +44,23 @@ class Token {
 			space,          // space
 			new_line,       // \n
 			KW_int,         // int
+			KW_bool,        // bool
+			KW_var,         // var
+			KW_const,       // const
+			KW_switch,      // switch
+			KW_print,       // print
+			KW_case,        // case
 			KW_if,          // if
 			KW_elif,        // elif
 			KW_else,        // else
 			KW_else_colon,  // else:
 			KW_loopc,       // loopc
+			KW_do,          // do
+			KW_while,       // while
+			KW_for,         // for
 			KW_and,         // and
 			KW_or,          // or
+			KW_xor,         // xor
 			KW_true,        // true
 			KW_false,       // false
 			eof,            // end of file
