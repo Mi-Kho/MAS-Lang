@@ -62,3 +62,6 @@ Loop -> "loopc" Condition ":" "begin" Statement "end"
 
 Statement -> Assign Statement | If Statement | Loop Statement | Assign | If | Loop
 
+Print -> "print" "(" Expr ")" ";" 
+       | "print" "(" Id ")" ";"
+
