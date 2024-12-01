@@ -1,0 +1,8 @@
+/home/javad/MAS-Lang/build/CMakeFiles/intrinsics_gen.dir
+/home/javad/MAS-Lang/build/CMakeFiles/omp_gen.dir
+/home/javad/MAS-Lang/build/CMakeFiles/acc_gen.dir
+/home/javad/MAS-Lang/build/CMakeFiles/edit_cache.dir
+/home/javad/MAS-Lang/build/CMakeFiles/rebuild_cache.dir
+/home/javad/MAS-Lang/build/code/CMakeFiles/MAS-Lang.dir
+/home/javad/MAS-Lang/build/code/CMakeFiles/edit_cache.dir
+/home/javad/MAS-Lang/build/code/CMakeFiles/rebuild_cache.dir

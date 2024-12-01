@@ -1,14 +1,21 @@
-S -> Define S | Assign S | If S | Loop S | Define | Assign | If | Loop
+S -> Cons S | Define S | Assign S | If S | Loop S | Define | Assign | If | Loop | Cons
 
-Define -> "int" Variables ";" |
-	  "int" Variables "=" Values ";"
+Cons -> "const" Define
 
+
+Define -> "int" Variables ";" | "int" Variables "=" Values ";" | "bool" Variables ";" | "bool" Variables "=" BValue ";" |
+          "float" Variables ";" | "float" Variables "=" FValues ";" | "var" Variables ";"
+          "var" Variables "=" AValues ";" 
 
 Variables -> Id "," Variables | Id
 
 AssignOp -> "+=" | "-=" | "*=" | "/=" | "%=" | "="
 
+AValues -> Values | BValues | FValues 
+
 Values -> Expr "," Values | Expr
+
+BValues -> Condition "," BValues | Condition
 
 Expr -> Expr "+" Term |
         Expr "-" Term | Term
@@ -19,9 +26,27 @@ Term -> Term "*" Power |
 
 Power -> Power "^" Factor | Factor
 
-Factor -> Id | Number | "(" Expr ")" 
+Factor -> Id | Number | "(" Expr ")" | "+"Number | "-"Number
 
-Assign ->  Variables AssignOp Values ";"
+FValues -> Fxpr "," FValues | Fxpr
+
+Fxpr -> Fxpr "+" Ferm |
+        Fxpr "-" Ferm | Ferm
+
+Ferm -> Ferm "*" Fower |
+        Factorerm "%" Fower |
+        Ferm "/" Fower | Fower
+
+Fower -> Fower "^" Flact | Flact
+
+Flact -> Id | FlNumber | "(" Fxpr ")" 
+
+
+Assign ->  Variables AssignOp Values ";" |
+           Variables "=" BValues ";" |
+           Variables AssignOp FValues ";" | Variables AssignOp Aalues ";" |
+           Variables"--" | Variables"++" |
+           Variables "=" Condition "?" Expr
 
 If -> "if" Condition ":" "begin" Statement "end" Elif Else |
       "if" Condition ":" "begin" Statement "end" Else |
@@ -44,7 +69,8 @@ Else -> "else" ":" "begin" Statement "end" |
 Statement -> Assign Statement | If Statement | Loop Statement | Assign | If | Loop
 
 Condition -> Condition "and" SubCondition | 
-	     Condition "or" SubCondition |  SubCondition
+	     Condition "or" SubCondition | 
+             Condition "xor" SubCondition | SubCondition
 
 SubCondition -> "True" | "False" | Expr | Expr Relational Expr |
 					  "(" Condition ")" 
