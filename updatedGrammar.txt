@@ -59,6 +59,10 @@ Loop -> "loopc" Condition ":" "begin" Statement "end"
       | "do" "{" Statement "}" "while" "(" Condition ")" 
       | "for" "(" Define ";" Condition ";" Assign ")" "{" Statement "}"
 
+Switch -> "switch" "(" Expr ")" "{" Cases Default "}"
+Cases -> "case" Expr ":" Statement "break" ";" Cases | "case" Expr ":" Statement "break" ";"
+Default -> "default" ":" Statement "break" ";" | ε
+
 
 Statement -> Assign Statement | If Statement | Loop Statement | Assign | If | Loop
 
