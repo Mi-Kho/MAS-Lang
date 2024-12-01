@@ -1,0 +1,64 @@
+S -> Cons S | Define S | Assign S | If S | Loop S | Define | Assign | If | Loop | Cons
+Cons -> "const" Define
+
+Define -> "int" Variables ";" 
+        | "int" Variables "=" Values ";" 
+        | "bool" Variables ";" 
+        | "bool" Variables "=" BValues ";" 
+        | "float" Variables ";" 
+        | "float" Variables "=" FValues ";" 
+        | "var" Variables ";" 
+        | "var" Variables "=" AValues ";" 
+        | "#define" Id "=" Expr
+
+
+Variables -> Id "," Variables | Id
+AValues -> Values | BValues | FValues 
+Values -> Expr "," Values | Expr
+BValues -> Condition "," BValues | Condition
+
+
+Expr -> Expr "+" Term | Expr "-" Term | Term
+Term -> Term "*" Power | Term "%" Power | Term "/" Power | Power
+Power -> Power "^" Factor | Factor
+Factor -> Id | Number | "(" Expr ")" | "+"Number | "-"Number
+
+
+FValues -> Fxpr "," FValues | Fxpr
+Fxpr -> Fxpr "+" Ferm | Fxpr "-" Ferm | Ferm
+Ferm -> Ferm "*" Fower | Ferm "%" Fower | Ferm "/" Fower | Fower
+Fower -> Fower "^" Flact | Flact
+Flact -> Id | FlNumber | "(" Fxpr ")"
+
+
+Assign -> Variables AssignOp Values ";" 
+        | Variables "=" BValues ";" 
+        | Variables AssignOp FValues ";" 
+        | Variables AssignOp AValues ";" 
+        | Variables "--" | Variables "++" 
+        | Variables "=" Condition "?" Expr ":" Expr
+
+
+Condition -> Condition "and" SubCondition 
+           | Condition "or" SubCondition 
+           | Condition "xor" SubCondition 
+           | SubCondition
+SubCondition -> "True" | "False" | Expr Relational Expr | "(" Condition ")"
+Relational -> ">" | "<" | ">=" | "<=" | "==" | "!="
+
+
+If -> "if" Condition ":" "begin" Statement "end" Elif Else 
+    | "if" Condition ":" "begin" Statement "end" Elif 
+    | "if" Condition ":" "begin" Statement "end" Else 
+    | "if" Condition ":" "begin" Statement "end"
+Elif -> "elif" Condition ":" "begin" Statement "end" Elif 
+     | "elif" Condition ":" "begin" Statement "end"
+Else -> "else" ":" "begin" Statement "end"
+
+Loop -> "loopc" Condition ":" "begin" Statement "end" 
+      | "do" "{" Statement "}" "while" "(" Condition ")" 
+      | "for" "(" Define ";" Condition ";" Assign ")" "{" Statement "}"
+
+
+Statement -> Assign Statement | If Statement | Loop Statement | Assign | If | Loop
+
